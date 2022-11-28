@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import TransactionForm from "../components/TransactionForm"
@@ -7,30 +7,57 @@ import List from "../components/List"
 import Spinner from '../components/Spinner'
 import { default as api } from '../features/api/apiSlice'
 
-
-
 function Dashboard() {
 
   const navigate = useNavigate()
   // const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
-  const { isError, isLoading, error } = api.useGetTransactionsQuery()
+  const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = api.useGetBudgetQuery()
+  const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = api.useGetTransactionsQuery()
+
+  //Filter transactions history
+  const [filteredTransactions, setFilteredTransactions] = useState(transactionData || []);
   
   useEffect(() => { 
-    if (isError) { 
-      console.log(error)
+    if (isBudgetError) { 
+      console.log(budgetError)
+    }
+    if (isTransactionError) { 
+      console.log(transactionError)
     }
     if (!user) {
       navigate('/login') //If user isn't logged in, return the user to the login page
     }
+
+    setFilteredTransactions(transactionData);
     
     // dispatch(getTransactions())
-  }, [user, isError, error, navigate])
+  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, navigate])
 
-  if (isLoading) {
+  if (isBudgetLoading || isTransactionLoading) {
     return <Spinner />
   }
+
+  const totalExpense = transactionData.reduce((total, transaction) => { 
+    return (total += transaction.amount)
+  }, 0)
+
+  const budgetAmount = budget[0].amount
+  const remaining = budget[0].amount - totalExpense
+
+  const alert = remaining < budgetAmount * 0.10 ? 'less-than-0' :
+                  remaining < budgetAmount * 0.25 ? 'less-than-25-percent' : 
+                    remaining < budgetAmount * 0.5 ? 'less-than-50-percent' : 
+                      remaining < budgetAmount * 0.75 ? 'less-than-75-percent' : 
+          'remaining-amount'
+  
+  const onSubmitFilter = (event) => {
+    const searchResults = transactionData.filter((filteredTransactions) =>
+    filteredTransactions.description.toLowerCase().includes(event.target.value)
+    );
+    setFilteredTransactions(searchResults);
+  };
 
   return (
     <>
@@ -38,10 +65,12 @@ function Dashboard() {
         <h1>Welcome {user && user.name}</h1>
         <p>Budget Tracker Dashboard</p>
       </section>
-
+      {/* { console.log(transactionData)}
+      { console.log(totalExpense)} */}
       <section className="balances">
-        <h1 id='budget'>Budget: <span id='budget-amount'> ${ 3000 }</span></h1>
-        <h1 id='remaining-balance'>Remaining Balance: <span id='remaining-amount'> ${ 500 }</span></h1>
+        <h1 id='budget'>Budget: <span id='budget-amount'> ${ budgetAmount }</span></h1>
+        <h1 id='remaining-balance'>Remaining Balance:
+          <span id={alert}> ${remaining}</span></h1>
       </section>
 
       <section className="dashboard-content">
@@ -54,9 +83,22 @@ function Dashboard() {
         </section>
 
         <section className="history-list">
-          <h4 id='history-list-title'>History List</h4>
           <div className="list-container">
-            <List />
+              {/* search transaction */}
+              <h4 id='history-list-title'>Search Transaction</h4>
+        
+              <div className='form-group'>
+                <input
+                    type='text'
+                    className='form-control'
+                    placeholder='Search for transactions'
+                    onChange={onSubmitFilter} 
+                    maxLength = {25}
+                />      
+                </div>
+            <h4 id='history-list-title'>History List</h4>
+            <List filteredTransactions={filteredTransactions} />
+            {console.log('Filtered Transactions: ',filteredTransactions)}
           </div>
         </section>
       </section>

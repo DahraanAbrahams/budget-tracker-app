@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { errorHandler } = require('./middleware/errorMiddleware')
 
 // access .env (environment variables)
 const dotenv = require('dotenv').config()
@@ -10,12 +11,14 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(errorHandler) //overwrites default express error handler
 
 // mongodb connection
 const dbConnect = require('./db/connection')
 
 //using routes
 app.use('/api/transactions', require('./routes/transactionRoutes'))
+app.use('/api/budget', require('./routes/budgetRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 
 dbConnect.then(db => { 

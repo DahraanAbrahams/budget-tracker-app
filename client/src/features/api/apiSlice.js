@@ -16,6 +16,33 @@ export const apiSlice = createApi({
             }
         }),
     endpoints: builder => ({
+        
+        //Get Budget - GET http://localhost:5001/api/budget
+        getBudget: builder.query({
+            query: () => '/api/budget', //Makes default GET request to URI/endpoint
+            providesTags: ['budget'] 
+        }), //GET http://localhost:5001/api/budget
+
+        //Add new budget - POST http://localhost:5001/api/budget
+        addBudget: builder.mutation({
+            query: (budgetData) => ({
+                url: '/api/budget',
+                method: 'POST',
+                body: budgetData
+            }),
+            invalidatesTags: ['budget']
+        }),
+
+        // //Update budget - PUT http://localhost:5001/api/budget
+        // updateBudget: builder.mutation({
+        //     query: (budgetID) => ({
+        //         url: `/api/budget/${budgetID.id}`,
+        //         method: 'PUT',
+        //         body: budgetID
+        //     }),
+        //     invalidatesTags: ['budget']
+        // }),
+
         //Get transactions - GET http://localhost:5001/api/transactions
         getTransactions: builder.query({
             query: () => '/api/transactions', //Makes default GET request to URI/endpoint

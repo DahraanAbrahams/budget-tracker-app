@@ -5,16 +5,20 @@ import TransactionForm from "../components/TransactionForm"
 import BudgetForm from "../components/BudgetForm"
 import List from "../components/List"
 import Spinner from '../components/Spinner'
-import { default as api } from '../features/api/apiSlice'
+// import { default as api } from '../features/api/apiSlice'
+
+import { useGetBudgetQuery } from '../features/api/budgetApi'
+import { useGetTransactionsQuery } from '../features/api/transactionsApi' 
+import { useAddBudgetMutation } from '../features/api/budgetApi'
 
 function Dashboard() {
 
   const navigate = useNavigate()
 
   const { user } = useSelector((state) => state.auth)
-  const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = api.useGetBudgetQuery()
-  const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = api.useGetTransactionsQuery()
-  const [setBudget] = api.useAddBudgetMutation()
+  const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = useGetBudgetQuery()
+  const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = useGetTransactionsQuery()
+  const [setBudget] = useAddBudgetMutation()
 
   //Filter transactions history
   const [filteredTransactions, setFilteredTransactions] = useState(transactionData || []);

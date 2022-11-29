@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form'
-import { default as api } from '../features/api/apiSlice'
-
+// import { default as api } from '../features/api/apiSlice'
+import { useAddBudgetMutation } from '../features/api/budgetApi'
 
 const BudgetForm = () => {
 
     const { register, handleSubmit, resetField, formState: { errors } } = useForm()
-    const [addBudget] = api.useAddBudgetMutation()
+    // const [addBudget] = api.useAddBudgetMutation()
+    const [addBudget] = useAddBudgetMutation()
 
     const onSubmit = async (data) => {
         // console.log(data)

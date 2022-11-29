@@ -1,4 +1,3 @@
-// import TransactionItem from "./TransactionItem"
 import { AiOutlineClose } from 'react-icons/ai'
 import { default as api } from '../features/api/apiSlice'
 import Spinner from './Spinner'
@@ -8,7 +7,7 @@ function List({ filteredTransactions}) {
   // console.log(api.useGetTransactionsQuery())
   const { isFetching, isSuccess, isError, isLoading, error } = api.useGetTransactionsQuery()
   const [deleteTransaction] = api.useDeleteTransactionMutation()
-  let Transactions
+  let transactionsList
 
   const deleteItem = (event) => { 
     if (!event) return 0
@@ -22,25 +21,26 @@ function List({ filteredTransactions}) {
     console.log(error)
   }
   else if (isSuccess) { 
-    Transactions = filteredTransactions.map((transaction) => (
-      // console.log(transaction._id)
-      <TransactionItem key={transaction._id}  transaction={transaction} deleteItem={ deleteItem } styleBorder={styleBorder} />
+    transactionsList = filteredTransactions && filteredTransactions.map((item) => (
+      <TransactionItem key={item._id}  transaction={item} deleteItem={ deleteItem } styleBorder={styleBorder} />
     ))
   }
 
   function isEmpty(filteredTransactions) {
+    if(!filteredTransactions) return 'UNDEFINED'
     return Object.keys(filteredTransactions).length === 0;
-}
+  }
+  
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <div className="history-list-item">
       
       {isEmpty(filteredTransactions) ?
         (<h3 id='no-transactions-message'>There are no transactions to display! Start by adding transactions...</h3>)
-        : (Transactions)}
-      {/* {data.length > 0 ?
-        Transactions :
-        (<h3 id='no-transactions-message'>There are no transactions to display! Start by adding transactions...</h3>)} */}
+        : (transactionsList)}
     </div>
   )
 }

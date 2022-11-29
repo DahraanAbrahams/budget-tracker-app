@@ -10,36 +10,38 @@ import { default as api } from '../features/api/apiSlice'
 function Dashboard() {
 
   const navigate = useNavigate()
-  // const dispatch = useDispatch()
 
   const { user } = useSelector((state) => state.auth)
   const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = api.useGetBudgetQuery()
   const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = api.useGetTransactionsQuery()
+  const [setBudget] = api.useAddBudgetMutation()
 
   //Filter transactions history
   const [filteredTransactions, setFilteredTransactions] = useState(transactionData || []);
   
-  useEffect(() => { 
-    if (isBudgetError) { 
+  useEffect(() => {
+    if (isBudgetError) {
       console.log(budgetError)
     }
-    if (isTransactionError) { 
+    if (isTransactionError) {
       console.log(transactionError)
     }
     if (!user) {
-      navigate('/login') //If user isn't logged in, return the user to the login page
+      navigate('/login')
     }
-
+    if (!budget) {
+      const defaultBudget = { 'amount': 0 }
+      setBudget(defaultBudget).unwrap()
+     }
     setFilteredTransactions(transactionData);
     
-    // dispatch(getTransactions())
-  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, navigate])
+  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, navigate])
 
   if (isBudgetLoading || isTransactionLoading) {
     return <Spinner />
   }
 
-  const totalExpense = transactionData.reduce((total, transaction) => { 
+  const totalExpense = transactionData?.reduce((total, transaction) => { 
     return (total += transaction.amount)
   }, 0)
 
@@ -98,7 +100,6 @@ function Dashboard() {
                 </div>
             <h4 id='history-list-title'>History List</h4>
             <List filteredTransactions={filteredTransactions} />
-            {console.log('Filtered Transactions: ',filteredTransactions)}
           </div>
         </section>
       </section>

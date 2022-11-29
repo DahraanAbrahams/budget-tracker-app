@@ -33,16 +33,6 @@ export const apiSlice = createApi({
             invalidatesTags: ['budget']
         }),
 
-        // //Update budget - PUT http://localhost:5001/api/budget
-        // updateBudget: builder.mutation({
-        //     query: (budgetID) => ({
-        //         url: `/api/budget/${budgetID.id}`,
-        //         method: 'PUT',
-        //         body: budgetID
-        //     }),
-        //     invalidatesTags: ['budget']
-        // }),
-
         //Get transactions - GET http://localhost:5001/api/transactions
         getTransactions: builder.query({
             query: () => '/api/transactions', //Makes default GET request to URI/endpoint

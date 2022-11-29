@@ -8,7 +8,7 @@ const BudgetForm = () => {
     const [addBudget] = api.useAddBudgetMutation()
 
     const onSubmit = async (data) => {
-        console.log(data)
+        // console.log(data)
         if (!data) return {}
         await addBudget(data).unwrap() 
         

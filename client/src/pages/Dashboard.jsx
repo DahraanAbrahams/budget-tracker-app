@@ -34,12 +34,15 @@ function Dashboard() {
       navigate('/login')
     }
     if (!budget) {
-      const defaultBudget = { 'amount': 0 }
-      setBudget(defaultBudget).unwrap()
-     }
+      if (user) {
+        const defaultBudget = { 'amount': 0 }
+        setBudget(defaultBudget).unwrap()
+      }
+    }
+    
     setFilteredTransactions(transactionData);
     
-  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, navigate])
+  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, setBudget, navigate])
 
   if (isBudgetLoading || isTransactionLoading) {
     return <Spinner />

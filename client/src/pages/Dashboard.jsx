@@ -5,7 +5,6 @@ import TransactionForm from "../components/TransactionForm"
 import BudgetForm from "../components/BudgetForm"
 import List from "../components/List"
 import Spinner from '../components/Spinner'
-// import { default as api } from '../features/api/apiSlice'
 
 import { useGetBudgetQuery } from '../features/api/budgetApi'
 import { useGetTransactionsQuery } from '../features/api/transactionsApi' 
@@ -74,8 +73,7 @@ function Dashboard() {
         <h1>Welcome {user && user.name}</h1>
         <p>Budget Tracker Dashboard</p>
       </section>
-      {/* { console.log(transactionData)}
-      { console.log(totalExpense)} */}
+
       <section className="balances">
         <h1 id='budget'>Budget: <span id='budget-amount'> ${ budgetAmount }</span></h1>
         <h1 id='remaining-balance'>Remaining Balance:
@@ -83,7 +81,7 @@ function Dashboard() {
       </section>
 
       <section className="dashboard-content">
-        {/* Add transaction section */}
+
         <section className="add-transaction">
           <h4 id='add-transaction-title'>Add Budget</h4>
           <BudgetForm />
@@ -93,7 +91,7 @@ function Dashboard() {
 
         <section className="history-list">
           <div className="list-container">
-              {/* search transaction */}
+
               <h4 id='history-list-title'>Search Transaction</h4>
         
               <div className='form-group'>

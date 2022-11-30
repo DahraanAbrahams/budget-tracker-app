@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const cors = require('cors')
 const { errorHandler } = require('./middleware/errorMiddleware')
@@ -19,6 +20,18 @@ const dbConnect = require('./db/connection')
 app.use('/api/transactions', require('./routes/transactionRoutes'))
 app.use('/api/budget', require('./routes/budgetRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
+
+//server frontend
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')))
+
+    app.get('*', (req, res) =>
+        res.sendFile(
+            path.resolve(__dirname, '../', 'client', 'build', 'index.html')
+        ))
+} else { 
+    app.get('/', (req, res) => res.send('Please set to production!'))
+}
 
 dbConnect.then(db => { 
     if (!db) return process.exit(1)

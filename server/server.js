@@ -21,12 +21,6 @@ app.use('/api/transactions', require('./routes/transactionRoutes'))
 app.use('/api/budget', require('./routes/budgetRoutes'))
 app.use('/api/users', require('./routes/userRoutes'))
 
-const proxy = require('http-proxy-middleware')
-
-module.exports = function(app) {
-    app.use(proxy(['/api' ], { target: 'http://localhost:5001' }));
-} 
-
 //server frontend
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));

@@ -51,7 +51,7 @@ function Dashboard() {
     return (total += transaction.amount)
   }, 0)
 
-  const budgetAmount = budget[0].amount
+  const budgetAmount = budget[0]?.amount
   const remaining = budget[0].amount - totalExpense
 
   const alert = remaining < budgetAmount * 0.10 ? 'less-than-0' :

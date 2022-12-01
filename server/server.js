@@ -33,6 +33,7 @@ if (process.env.NODE_ENV === 'production') {
   } else {
     app.get('/', (req, res) => res.send('Please set to production'));
 }
+
   
 dbConnect.then(db => { 
     if (!db) return process.exit(1)

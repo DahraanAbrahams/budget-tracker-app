@@ -34,7 +34,7 @@ function Dashboard() {
     }
     if (!budget) {
       if (user) {
-        const defaultBudget = { 'amount': 0 }
+        const defaultBudget = { amount: 0 }
         setBudget(defaultBudget).unwrap()
       }
     }

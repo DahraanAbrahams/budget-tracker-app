@@ -5,7 +5,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 
 // access .env (environment variables)
 const dotenv = require('dotenv').config()
-const PORT = process.env.PORT||5001
+const port = process.env.PORT||5001
 const app = express()
 
 // middleware
@@ -23,11 +23,11 @@ app.use('/api/users', require('./routes/userRoutes'))
 
 //server frontend
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+    app.use(express.static(path.join(__dirname, '../client/build')));
   
     app.get('*', (req, res) =>
       res.sendFile(
-        path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+        path.resolve(__dirname, '../', 'client', 'build', 'index.html')
       )
     )
   } else {
@@ -38,8 +38,8 @@ if (process.env.NODE_ENV === 'production') {
 dbConnect.then(db => { 
     if (!db) return process.exit(1)
     
-    app.listen(PORT, () => { 
-        console.log(`Server is running on port: http://localhost:${PORT}`)
+    app.listen(port, () => { 
+        console.log(`Server is running on port: http://localhost:${port}`)
     })
 
     app.on('error', err => console.log(`Failed to connect with HTTP Server: ${err}`))

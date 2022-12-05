@@ -20,7 +20,8 @@ function Login() {
     
     const { user, isLoading, isError, isSuccess, message } = useSelector(
       (state) => state.auth
-    ) 
+    ) //useSelector takes as parameter state and the 
+    // and the part of the state that we're wanting to get the destructured states from - state.auth
 
     useEffect(() => {
       if (isError) {

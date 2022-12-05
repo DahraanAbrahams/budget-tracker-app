@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const BudgetSchema = new Schema({
     amount: {
         type: Number,
+        default: 0,
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,

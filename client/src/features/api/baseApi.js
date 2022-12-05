@@ -7,9 +7,10 @@ export const baseApi = createApi({
         baseUrl: baseURI,
         prepareHeaders: async (headers, { getState }) => { 
             const token = await getState().auth.user.token
-            if(token === null) return 'No token available'
-            else { 
+            if (token) {
                 headers.set('authorization', `Bearer ${token}`)
+            } else { 
+                return ''
             }
             return headers
         },

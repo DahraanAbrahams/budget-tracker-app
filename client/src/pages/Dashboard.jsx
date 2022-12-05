@@ -5,11 +5,10 @@ import TransactionForm from "../components/TransactionForm"
 import BudgetForm from "../components/BudgetForm"
 import List from "../components/List"
 import Spinner from '../components/Spinner'
-// import { default as api } from '../features/api/apiSlice'
 
 import { useGetBudgetQuery } from '../features/api/budgetApi'
 import { useGetTransactionsQuery } from '../features/api/transactionsApi' 
-import { useAddBudgetMutation } from '../features/api/budgetApi'
+
 
 function Dashboard() {
 
@@ -18,10 +17,11 @@ function Dashboard() {
   const { user } = useSelector((state) => state.auth)
   const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = useGetBudgetQuery()
   const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = useGetTransactionsQuery()
-  const [setBudget] = useAddBudgetMutation()
+  // const [setBudget] = useAddBudgetMutation()
 
   //Filter transactions history
-  const [filteredTransactions, setFilteredTransactions] = useState(transactionData || []);
+  const [filteredTransactions, setFilteredTransactions] = useState(transactionData || [])
+  
   
   useEffect(() => {
     if (isBudgetError) {
@@ -33,16 +33,16 @@ function Dashboard() {
     if (!user) {
       navigate('/login')
     }
-    if (!budget) {
-      if (user) {
-        const defaultBudget = { 'amount': 0 }
-        setBudget(defaultBudget).unwrap()
-      }
-    }
+    // if (!budget || budget === null) {
+    //   if (user) {
+    //     const defaultBudget = { amount: 100 }
+    //     setBudget(defaultBudget).unwrap()
+    //   }
+    // }
     
     setFilteredTransactions(transactionData);
     
-  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, setBudget, navigate])
+  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, navigate])
 
   if (isBudgetLoading || isTransactionLoading) {
     return <Spinner />
@@ -53,7 +53,7 @@ function Dashboard() {
   }, 0)
 
   const budgetAmount = budget[0].amount
-  const remaining = budget[0].amount - totalExpense
+  const remaining = budgetAmount - totalExpense
 
   const alert = remaining < budgetAmount * 0.10 ? 'less-than-0' :
                   remaining < budgetAmount * 0.25 ? 'less-than-25-percent' : 
@@ -74,8 +74,7 @@ function Dashboard() {
         <h1>Welcome {user && user.name}</h1>
         <p>Budget Tracker Dashboard</p>
       </section>
-      {/* { console.log(transactionData)}
-      { console.log(totalExpense)} */}
+
       <section className="balances">
         <h1 id='budget'>Budget: <span id='budget-amount'> ${ budgetAmount }</span></h1>
         <h1 id='remaining-balance'>Remaining Balance:
@@ -83,7 +82,7 @@ function Dashboard() {
       </section>
 
       <section className="dashboard-content">
-        {/* Add transaction section */}
+
         <section className="add-transaction">
           <h4 id='add-transaction-title'>Add Budget</h4>
           <BudgetForm />
@@ -93,7 +92,7 @@ function Dashboard() {
 
         <section className="history-list">
           <div className="list-container">
-              {/* search transaction */}
+
               <h4 id='history-list-title'>Search Transaction</h4>
         
               <div className='form-group'>

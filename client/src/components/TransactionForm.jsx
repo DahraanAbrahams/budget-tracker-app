@@ -1,19 +1,17 @@
 import { useForm } from 'react-hook-form'
-// import { default as api } from '../features/api/apiSlice'
 import { useCreateTransactionMutation } from '../features/api/transactionsApi' 
 
 
 const TransactionForm = () => {
 
     const { register, handleSubmit, resetField, formState: { errors } } = useForm()
-    // const [createTransaction] = api.useCreateTransactionMutation()
     const [createTransaction] = useCreateTransactionMutation()
 
     const onSubmit = async (data) => {
         if (!data) return {}
-        await createTransaction(data).unwrap() //We use unwrap to provide a raw response
+        await createTransaction(data).unwrap() 
         
-        resetField('description') //We need to reset these fields to update the UI
+        resetField('description') 
         resetField('amount')
     }
     

@@ -1,8 +1,10 @@
 import { AiOutlineClose } from 'react-icons/ai'
+// import { default as api } from '../features/api/apiSlice'
 import Spinner from './Spinner'
 import { useGetTransactionsQuery, useDeleteTransactionMutation } from '../features/api/transactionsApi'
 function List({ filteredTransactions}) {
 
+  // console.log(api.useGetTransactionsQuery())
   const { isFetching, isSuccess, isError, isLoading, error } = useGetTransactionsQuery()
   const [deleteTransaction] = useDeleteTransactionMutation()
   let transactionsList

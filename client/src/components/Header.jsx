@@ -11,7 +11,7 @@ function Header() {
 
   const onLogout = () => {
     dispatch(logout())
-    dispatch(reset())
+    // dispatch(reset())
     dispatch(baseApi.util.resetApiState())
     navigate('/')
   }

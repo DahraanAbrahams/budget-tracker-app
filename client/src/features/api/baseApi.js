@@ -6,11 +6,10 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: baseURI,
         prepareHeaders: async (headers, { getState }) => { 
-            const token = await getState().auth?.user?.token
-            if (token) {
+            const token = await getState().auth.user.token
+            if(token === null) return 'No token available'
+            else { 
                 headers.set('authorization', `Bearer ${token}`)
-            } else { 
-                return "No Token"
             }
             return headers
         },

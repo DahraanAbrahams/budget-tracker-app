@@ -5,7 +5,7 @@ const { errorHandler } = require('./middleware/errorMiddleware')
 
 // access .env (environment variables)
 const dotenv = require('dotenv').config()
-const port = process.env.PORT||5001
+const PORT = process.env.PORT||5001
 const app = express()
 
 // middleware
@@ -38,8 +38,8 @@ if (process.env.NODE_ENV === 'production') {
 dbConnect.then(db => { 
     if (!db) return process.exit(1)
     
-    app.listen(port, () => { 
-        console.log(`Server is running on port: http://localhost:${port}`)
+    app.listen(PORT, () => { 
+        console.log(`Server is running on port: http://localhost:${PORT}`)
     })
 
     app.on('error', err => console.log(`Failed to connect with HTTP Server: ${err}`))

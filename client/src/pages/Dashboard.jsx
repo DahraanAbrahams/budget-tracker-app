@@ -8,7 +8,7 @@ import Spinner from '../components/Spinner'
 
 import { useGetBudgetQuery } from '../features/api/budgetApi'
 import { useGetTransactionsQuery } from '../features/api/transactionsApi' 
-import { useAddBudgetMutation } from '../features/api/budgetApi'
+
 
 function Dashboard() {
 
@@ -17,10 +17,11 @@ function Dashboard() {
   const { user } = useSelector((state) => state.auth)
   const { data: budget, isError: isBudgetError, isLoading: isBudgetLoading, error: budgetError } = useGetBudgetQuery()
   const { data: transactionData, isError: isTransactionError, isLoading: isTransactionLoading, error: transactionError } = useGetTransactionsQuery()
-  const [setBudget] = useAddBudgetMutation()
+  // const [setBudget] = useAddBudgetMutation()
 
   //Filter transactions history
-  const [filteredTransactions, setFilteredTransactions] = useState(transactionData || []);
+  const [filteredTransactions, setFilteredTransactions] = useState(transactionData || [])
+  
   
   useEffect(() => {
     if (isBudgetError) {
@@ -32,16 +33,16 @@ function Dashboard() {
     if (!user) {
       navigate('/login')
     }
-    if (!budget) {
-      if (user) {
-        const defaultBudget = { amount: 0 }
-        setBudget(defaultBudget).unwrap()
-      }
-    }
+    // if (!budget || budget === null) {
+    //   if (user) {
+    //     const defaultBudget = { amount: 100 }
+    //     setBudget(defaultBudget).unwrap()
+    //   }
+    // }
     
     setFilteredTransactions(transactionData);
     
-  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, setBudget, navigate])
+  }, [user, isBudgetError, isTransactionError, budgetError, transactionError, transactionData, budget, navigate])
 
   if (isBudgetLoading || isTransactionLoading) {
     return <Spinner />
@@ -51,8 +52,8 @@ function Dashboard() {
     return (total += transaction.amount)
   }, 0)
 
-  const budgetAmount = budget[0]?.amount
-  const remaining = budget[0].amount - totalExpense
+  const budgetAmount = budget[0].amount
+  const remaining = budgetAmount - totalExpense
 
   const alert = remaining < budgetAmount * 0.10 ? 'less-than-0' :
                   remaining < budgetAmount * 0.25 ? 'less-than-25-percent' : 

@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const port = process.env.PORT||5001
-const baseURI = `http://localhost:${port}`
+const baseURI = 'http://localhost:5001'
 
 export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
@@ -11,7 +10,7 @@ export const baseApi = createApi({
             if (token) {
                 headers.set('authorization', `Bearer ${token}`)
             } else { 
-                return "No Token"
+                return ''
             }
             return headers
         },

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const baseURI = 'https://budgettrackerappdahraan.herokuapp.com/'
+const baseURI = 'http://localhost:5001'
 
 export const baseApi = createApi({
     baseQuery: fetchBaseQuery({

@@ -4,15 +4,15 @@ const cors = require('cors')
 const { errorHandler } = require('./middleware/errorMiddleware')
 
 // access .env (environment variables)
-const dotenv = require('dotenv').config()
-const port = process.env.PORT||3001
+require('dotenv').config({path: "./.env"})
+const port = process.env.PORT||5001
 const app = express()
 
 // middleware
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(errorHandler) //overwrites default express error handler
+app.use(errorHandler) 
 
 const dbConnect = require('./db/connection')
 

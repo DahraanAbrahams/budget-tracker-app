@@ -1,7 +1,7 @@
 //Strictly For making HTTP request and sending data back and also storing any data in local storage
 import axios from 'axios'
 
-const API_URL = 'https://budgettrackerappdahraan.herokuapp.com//api/users/'
+const API_URL = '/api/users/'
 
 
 //Register user

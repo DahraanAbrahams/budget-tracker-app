@@ -34,7 +34,7 @@ function Dashboard() {
     }
     if (!budget) {
       if (user) {
-        const defaultBudget = { amount: 0 }
+        const defaultBudget = { 'amount': 0 }
         setBudget(defaultBudget).unwrap()
       }
     }
@@ -52,7 +52,7 @@ function Dashboard() {
   }, 0)
 
   const budgetAmount = budget[0]?.amount
-  const remaining = budget[0].amount - totalExpense
+  const remaining = budgetAmount - totalExpense
 
   const alert = remaining < budgetAmount * 0.10 ? 'less-than-0' :
                   remaining < budgetAmount * 0.25 ? 'less-than-25-percent' : 

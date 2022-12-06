@@ -10,7 +10,7 @@ export const baseApi = createApi({
             if (token) {
                 headers.set('authorization', `Bearer ${token}`)
             } else { 
-                return "No Token"
+                return ''
             }
             return headers
         },

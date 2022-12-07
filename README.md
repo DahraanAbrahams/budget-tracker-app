@@ -44,7 +44,7 @@ The frontend was created using ReactJS. The backend was created using NodeJS wit
 
 <h4>Frontend Dependencies</h4>
   <p style="font-weight: lighter">
-  &emsp;cd frontend
+  &emsp;cd frontend <br>
   &emsp;npm install
   </p>
 

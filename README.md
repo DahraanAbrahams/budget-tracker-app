@@ -26,24 +26,23 @@ The frontend was created using ReactJS. The backend was created using NodeJS wit
   title="My Image"
   style="display: inline-block; margin: 0 auto; max-width: 300px">
 
-Usage
+<h1>Usage</h1>
 
-Create a .env file in the root directory with the following content:
+<h3>Create a .env file in the root directory with the following content: </h3>
 
-  NODE_ENV = development
-  PORT = 5000
-  MONGO_URI = mongodb+srv://YOURMONGOURI
-  JWT_SECRET = budgetTracker123
+  <h4> NODE_ENV = development </h4>
+  <h4> PORT = 5000 </h4>
+  <h4> MONGO_URI = mongodb+srv://YOURMONGOURI </h4>
+  <h4> JWT_SECRET = budgetTracker123 </h4>
 
-Install Dependencies
+<h1>Install Dependencies</h1>
 
-  # Backend Dependencies
-  npm install
+<h3>Backend Dependencies</h3>
+  <h4>npm install<h4>
 
-  # Frontend Dependencies
-  cd frontend
-  npm install
+<h3>Frontend Dependencies</h3>
+  <h4>cd frontend</h4>
+  <h4>npm install</h4>
 
-Run Server
-
-  npm run server
+<h1>Run Server</h1>
+  <h4>npm run server</h4>

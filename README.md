@@ -31,9 +31,9 @@ The frontend was created using ReactJS. The backend was created using NodeJS wit
 <h4 style="font-weight: lighter">Create a .env file in the root directory with the following content: </h4>
 
   <p style="font-weight: lighter"> 
-   NODE_ENV = development 
-   PORT = 5000 
-   MONGO_URI = mongodb+srv://YOURMONGOURI 
+   NODE_ENV = development <br>
+   PORT = 5000 <br>
+   MONGO_URI = mongodb+srv://YOURMONGOURI <br>
    JWT_SECRET = budgetTracker123 
    </p>
 

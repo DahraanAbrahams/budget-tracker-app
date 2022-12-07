@@ -3,6 +3,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 
+//Trying
+const Budget = require('../models/budgetModel')
+
 // @desc    Register new user
 // @route   POST /api/users
 // @access  Public 
@@ -30,12 +33,19 @@ const register_User = asyncHandler(async (req, res) => {
         password: hashedPassword
     })
 
+    //Try
+    const budget = await Budget.create({
+        amount: 0,
+        user
+    })
+
     if (user) {
         res.status(201).json({
             _id: user.id,
             name: user.name,
             email: user.email,
-            token: generateToken(user._id)
+            token: generateToken(user._id),
+            budget
         })
     } else { 
         res.status(400)

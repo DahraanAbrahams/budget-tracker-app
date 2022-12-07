@@ -4,7 +4,7 @@ const cors = require('cors')
 const { errorHandler } = require('./middleware/errorMiddleware')
 
 // access .env (environment variables)
-require('dotenv').config({path: "./.env"})
+const dotenv = require('dotenv').config()
 const port = process.env.PORT||5001
 const app = express()
 
@@ -12,7 +12,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(errorHandler) 
+app.use(errorHandler) //overwrites default express error handler
 
 const dbConnect = require('./db/connection')
 
@@ -23,16 +23,18 @@ app.use('/api/users', require('./routes/userRoutes'))
 
 //server frontend
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')))
-
+    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+  
     app.get('*', (req, res) =>
-        res.sendFile(
-            path.resolve(__dirname, '../', 'client', 'build', 'index.html')
-        ))
-} else { 
-    app.get('/', (req, res) => res.send('Please set to production!'))
+      res.sendFile(
+        path.resolve(__dirname, '..', 'client', 'build', 'index.html')
+      )
+    )
+  } else {
+    app.get('/', (req, res) => res.send('Please set to production'));
 }
 
+  
 dbConnect.then(db => { 
     if (!db) return process.exit(1)
     
